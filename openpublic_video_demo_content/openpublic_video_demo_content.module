@@ -3,4 +3,71 @@
  * @file
  */
 
-// Drupal needs this blank file.
+/**
+ * Implementation of hook_enable()
+ */
+function openpublic_video_demo_content_enable(){
+
+  $file = array(
+    'uid' => 1,
+    'filename' => '19978233',
+    'uri' => 'vimeo://v/19978233',
+    'filemime' => 'video/vimeo',
+    'filesize' => 0,
+    'status' => 1,
+    'timestamp' => date('U'),
+    'type' => 'video',
+  );
+
+  drupal_write_record('file_managed', $file);
+
+  $node = (object)array(
+    'uid' => 1,
+    'title' => 'Introducing OpenPublic',
+    'status' => '1',
+    'promote' => '1',
+    'sticky' => '0',
+    'type' => 'video',
+    'language' => 'und',
+    'created' => '1327080872',
+    'comment' => '2',
+    'translate' => '0',
+    'machine_name' => 'op_video_introducing_op',
+    'body' => array(
+      'und' => array(
+        0 => array(
+          'value' => 'An introduction to OpenPublic, a Drupal distribution for government websites.',
+          'summary' => '',
+          'format' => 'filtered_html',
+          'safe_value' => '<p>An introduction to OpenPublic, a Drupal distribution for government websites.</p>',
+          'safe_summary' => '',
+        ),
+      ),
+    ),
+    'field_video' => array(
+      'und' => array(
+         0 => array(
+          'fid' => $file['fid'],
+          'title' => '',
+          'data' => '',
+         )
+       )
+    ),
+  );
+
+  node_save($node);
+}
+
+/**
+ * Implementation of hook_disable()
+ */
+function openpublic_video_demo_content_disable(){
+  
+  $nid = db_query('SELECT nid FROM {defaultcontent} WHERE name = :name', array(':name' => 'op_video_introducing_op'))->fetchField();
+  
+  //Remove sample content
+  if ($nid) {
+    node_delete($nid);
+    db_query('DELETE FROM {file_managed} WHERE uri = :uri', array(':uri' => 'vimeo://v/19978233'));
+  }
+}
