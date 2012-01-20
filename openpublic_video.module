@@ -15,6 +15,16 @@ function openpublic_video_init(){
 }
 
 /**
+ * Implementation of hook_apps_app_info()
+ */
+function openpublic_video_apps_app_info() {
+  return array(
+    'demo content description' => 'This will add a sample video to the multimedia page for demonstration.',
+    'demo content module' => 'openpublic_video_demo_content',
+  );
+}
+
+/**
  * Implementation of hook_views_query_alter()
  */
 function openpublic_video_views_query_alter(&$view, &$query){

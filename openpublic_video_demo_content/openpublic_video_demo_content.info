@@ -1,4 +1,5 @@
 core = "7.x"
+dependencies[] = "openpublic_video"
 description = "Demo Content for OpenPublic Video feature"
 features[content][] = "op_video_introducing_op"
 name = "OpenPublic Video Demo Content"
