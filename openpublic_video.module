@@ -1,0 +1,114 @@
+<?php
+/**
+ * @file
+ * Code for the OpenPublic Video feature.
+ */
+
+include_once('openpublic_video.features.inc');
+include_once('openpublic_video.theme.inc');
+
+/**
+ * Implementation of hook_init()
+ */
+function openpublic_video_init(){
+  drupal_add_css(drupal_get_path('module', 'openpublic_video').'/css/openpublic_video.css');
+}
+
+/**
+ * Implementation of hook_views_query_alter()
+ */
+function openpublic_video_views_query_alter(&$view, &$query){
+
+  /**
+   * Override media gallery view
+   */
+  if ($view->name == 'media_gallery'){
+    /**
+     * Add video to list of content that can be pulled from media gallery
+     */
+    if ($query->where[0]['conditions'][0]['value'][0]['media_gallery'])
+      $query->where[0]['conditions'][0]['value'][] = 'video';
+    else
+      watchdog('openpublic_video', 'Unable to display video in media gallery.');
+  }  
+}
+
+/**
+ * Implementation of hook_enable()
+ */
+function openpublic_video_enable(){
+  /**
+   * Vimeo Settings
+   */
+  db_query('DELETE FROM {file_display} WHERE name = :name', array(':name' => 'video__default__media_vimeo_video'));
+
+  $display = array (
+    'status' => 1,//enabled video player
+    'weight' => 0,
+    'settings' => array (
+      'width' => 560,
+      'height' => 340,
+      'autoplay' => 0
+    ),
+    'name' => 'video__default__media_vimeo_video',
+    'table' => 'file_display',
+    'type' => 'Local',
+    'export_type' => EXPORT_IN_DATABASE,
+  );
+
+  drupal_write_record('file_display', $display);
+
+  db_query('DELETE FROM {file_display} WHERE name = :name', array(':name' => 'video__media_preview__media_vimeo_image'));
+
+  $display = array(
+    'status' => 1,
+    'weight' => 2,
+    'settings' => array(
+      'image_style' => 'list-page-thumbnail',
+    ),
+    'name' => 'video__media_preview__media_vimeo_image',
+    'table' => 'file_display',
+    'type' => 'Local',
+    'export_type' => EXPORT_IN_DATABASE
+  );
+
+  drupal_write_record('file_display', $display);
+
+
+  /**
+   * Youtube Settings
+   */
+  db_query('DELETE FROM {file_display} WHERE name = :name', array(':name' => 'video__default__media_youtube_video'));
+
+  $display = array (
+    'status' => 1,//enabled video player
+    'weight' => 0,
+    'settings' => array (
+      'width' => 560,
+      'height' => 340,
+      'autoplay' => 0
+    ),
+    'name' => 'video__default__media_youtube_video',
+    'table' => 'file_display',
+    'type' => 'Local',
+    'export_type' => EXPORT_IN_DATABASE,
+  );
+
+  drupal_write_record('file_display', $display);
+
+  db_query('DELETE FROM {file_display} WHERE name = :name', array(':name' => 'video__media_preview__media_youtube_image'));
+
+  $display = array(
+    'status' => 1,
+    'weight' => 2,
+    'settings' => array(
+      'image_style' => 'list-page-thumbnail',
+    ),
+    'name' => 'video__media_preview__media_youtube_image',
+    'table' => 'file_display',
+    'type' => 'Local',
+    'export_type' => EXPORT_IN_DATABASE
+  );
+
+  drupal_write_record('file_display', $display);
+}

@@ -1,0 +1,4 @@
+/** Clean up video field **/
+.node-video .field-name-field-video {
+  margin-bottom: 10px;
+}

@@ -1,0 +1,16 @@
+name = Openpublic Video
+description = Adds 3rd party video to Media room.
+machine_name = openpublic_video
+version = 1.0
+downloadable = openpublic_video 1.0
+author = Mediacurrent
+author_url = http://www.mediacurrent.com
+screenshots[] = openpublic-video-screenshot.jpg
+logo = openpublic-video-logo.png
+dependencies[media] = media 1.0-beta5
+dependencies[media_vimeo] = media_vimeo 1.0-beta3
+dependencies[styles] = styles 1.0-alpha4
+downloadables[media 1.0-beta5] = http://ftp.drupal.org/files/projects/media-7.x-1.0-beta5.zip
+downloadables[media_vimeo 1.0-beta3] = http://ftp.drupal.org/files/projects/media_vimeo-7.x-1.0-beta3.zip
+downloadables[styles 1.0-alpha4] = http://ftp.drupal.org/files/projects/styles-7.x-1.0-alpha4.zip
+downloadables[openpublic_video 1.0] = http://www.mediacurrent.com/sites/default/files/fserver/openpublic_video_0.zip
