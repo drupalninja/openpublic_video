@@ -1,0 +1,5 @@
+core = "7.x"
+description = "Demo Content for OpenPublic Video feature"
+features[content][] = "op_video_introducing_op"
+name = "OpenPublic Video Demo Content"
+package = "Features"
